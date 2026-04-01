@@ -1,12 +1,7 @@
 """
 data_context.py
----------------
-Loads executive_view_enriched.xlsx and builds a compact,
-structured context string to inject into every Groq API call.
-
-Why compact? Groq has token limits. We don't send 1000 raw rows —
-we send a smart summary that gives the AI everything it needs
-to answer business questions accurately.
+Loads executive_view_enriched.xlsx and builds a compact context string for Groq API calls.
+Sends a summary instead of raw rows to stay within token limits.
 """
 
 import pandas as pd
@@ -20,11 +15,7 @@ def load_data(filepath: str = None) -> pd.DataFrame:
 
 
 def build_ai_context(df: pd.DataFrame) -> str:
-    """
-    Build a compact, structured context string from the DataFrame.
-    This string will be injected into every Groq API call so the AI
-    can answer grounded, data-specific questions.
-    """
+    """Build a compact context string from the DataFrame for injection into Groq API calls."""
 
     # --- Priority distribution ---
     priority_counts = df["priority_level"].value_counts()
@@ -99,10 +90,7 @@ LOW      : {priority_counts.get('LOW', 0)} SKUs (bottom 40% — no immediate con
 
 
 def get_full_data_for_query(df: pd.DataFrame) -> str:
-    """
-    For detailed Q&A queries, return a more complete (but still compact)
-    view of CRITICAL and HIGH items only — to keep tokens manageable.
-    """
+    """Return a more detailed context string covering CRITICAL and HIGH items only. Used for Q&A queries."""
     action_items = df[df["priority_level"].isin(["CRITICAL", "HIGH"])][
         [
             "store_id",

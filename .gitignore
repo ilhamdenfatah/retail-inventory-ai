@@ -137,6 +137,7 @@ celerybeat.pid
 # Environments
 .env
 .envrc
+inventory_ai_dashboard/.env
 .venv
 env/
 venv/
@@ -206,8 +207,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Claude Code
+.claude/
+
 # Raw and large data files
 *.csv
 data/
-executive_view.xlsx
-executive_view_regen.xlsx

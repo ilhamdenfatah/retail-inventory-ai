@@ -1,13 +1,6 @@
 """
 groq_client.py
---------------
-Handles all communication with the Groq API.
-
-This module has one job: take a system prompt + user message,
-send it to Groq, and return the AI's response as a string.
-
-Nothing about Streamlit or data lives here — just the API call.
-This keeps concerns separated and makes testing easy.
+Handles all Groq API calls. Takes a system prompt and message, returns the response as a string.
 """
 
 import os
@@ -35,29 +28,7 @@ def ask_groq(
     model: str = "llama-3.3-70b-versatile",
     temperature: float = 0.3,
 ) -> str:
-    """
-    Send a message to Groq and return the response text.
-
-    Parameters
-    ----------
-    system_prompt : str
-        Instructions + data context for the AI.
-        This is where we inject the inventory snapshot.
-    user_message : str
-        The question or task from the user (or from our app for Layer 1).
-    model : str
-        Groq model to use. llama-3.3-70b-versatile is the best
-        free-tier option for business reasoning tasks.
-    temperature : float
-        0.0 = very deterministic (good for data questions)
-        1.0 = more creative (good for narrative writing)
-        0.3 is a good balance for business analysis.
-
-    Returns
-    -------
-    str
-        The AI's response as plain text.
-    """
+    """Send a single message to Groq and return the response text."""
     client = get_groq_client()
 
     chat_completion = client.chat.completions.create(
@@ -78,22 +49,7 @@ def ask_groq_with_history(
     model: str = "llama-3.3-70b-versatile",
     temperature: float = 0.3,
 ) -> str:
-    """
-    Send a full conversation history to Groq (used in Layer 2 Q&A chat).
-
-    Parameters
-    ----------
-    system_prompt : str
-        Instructions + data context — same as above.
-    conversation_history : list[dict]
-        Full chat history in format:
-        [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}, ...]
-    
-    Returns
-    -------
-    str
-        The AI's latest response as plain text.
-    """
+    """Send a full conversation history to Groq. Used for the Layer 2 Q&A chat."""
     client = get_groq_client()
 
     messages = [{"role": "system", "content": system_prompt}] + conversation_history
