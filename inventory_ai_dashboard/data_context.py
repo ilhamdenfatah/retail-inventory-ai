@@ -10,10 +10,11 @@ to answer business questions accurately.
 """
 
 import pandas as pd
+from pathlib import Path
 
-
-def load_data(filepath: str = "executive_view_enriched.xlsx") -> pd.DataFrame:
-    """Load the inventory dataset into a pandas DataFrame."""
+def load_data(filepath: str = None) -> pd.DataFrame:
+    if filepath is None:
+        filepath = Path(__file__).parent / "executive_view_enriched.xlsx"
     df = pd.read_excel(filepath)
     return df
 
