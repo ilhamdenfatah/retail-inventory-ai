@@ -7,6 +7,7 @@ Built on the [Kaggle Corporación Favorita dataset](https://www.kaggle.com/compe
 **Live demos:**
 - Streamlit AI Dashboard → https://retail-inventory-ai.streamlit.app/
 - Tableau Dashboard → https://public.tableau.com/app/profile/ilham.den.fatah/viz/dashboard_17714436693350/DashboardFixed?publish=yes
+- Demo video → https://youtu.be/uB-3O1NLVfQ
 
 ---
 
